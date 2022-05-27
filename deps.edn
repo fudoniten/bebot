@@ -1,0 +1,36 @@
+{
+ :paths ["src"]
+ :deps {
+        org.clojure/clojure    { :mvn/version "1.10.3" }
+        org.clojure/core.async { :mvn/version "1.5.648" }
+        org.clojure/core.match { :mvn/version "1.0.0" }
+        org.clojure/test.check { :mvn/version "1.1.1" }
+
+        net.bis5.mattermost4j/mattermost4j-core { :mvn/version "0.24.0" }
+
+        org.fudo/fudo-clojure {
+                               :git/url "https://git.fudo.org/fudo-public/fudo-clojure.git"
+                               :sha "2d9303f55f7eac9c2f8989e9a0dde3dc97811220"
+                               }
+        }
+ :aliases {
+           :test {
+                  :extra-paths ["test"]
+                  :extra-deps {
+                               io.github.cognitect-labs/test-runner
+                               {
+                                :git/url "https://github.com/cognitect-labs/test-runner.git"
+                                :sha "e1e292d8332eb7167e402ecb22f36f1443ba85e6"
+                                }
+                               }
+                  :main-opts ["-m" "cognitect.test-runner"]
+                  :exec-fn cognitect.test-runner.api/test
+                  }
+           :uberjar {
+                     :replace-deps {uberdeps/uberdeps {:mvn/version "1.1.4"}}
+                     :replace-paths []
+                     :main-opts ["-m" "uberdeps.uberjar"
+                                 "--target" "./target/bebot.jar"]
+                     }
+           }
+ }

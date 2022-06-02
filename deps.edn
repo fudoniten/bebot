@@ -1,14 +1,13 @@
 {
  :paths ["src"]
  :deps {
-        org.clojure/clojure    { :mvn/version "1.10.3" }
+        org.clojure/clojure    { :mvn/version "1.11.1" }
         org.clojure/core.async { :mvn/version "1.5.648" }
-        org.clojure/core.match { :mvn/version "1.0.0" }
-        org.clojure/test.check { :mvn/version "1.1.1" }
 
         net.bis5.mattermost4j/mattermost4j-core { :mvn/version "0.24.0" }
 
         org.fudo/fudo-clojure {
+                               ;; :local/root "/nix/store/afrgn7xsiglgfghnfqbba22yq3hc41a6-fudo-clojure-0.1-standalone.jar"
                                :git/url "https://git.fudo.org/fudo-public/fudo-clojure.git"
                                :sha "2d9303f55f7eac9c2f8989e9a0dde3dc97811220"
                                }
@@ -26,10 +25,5 @@
                   :main-opts ["-m" "cognitect.test-runner"]
                   :exec-fn cognitect.test-runner.api/test
                   }
-           :uberdeps {
-                      :replace-deps {uberdeps/uberdeps {:mvn/version "1.1.4"}}
-                      :replace-paths []
-                      :main-opts ["-m" "uberdeps.uberjar"]
-                      }
            }
  }

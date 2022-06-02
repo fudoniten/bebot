@@ -6,8 +6,6 @@
                                       PostList
                                       User)))
 
-(defn- pthru [o] (clojure.pprint/pprint o) o)
-
 (defn- to-instant [millis]
   (java.time.Instant/ofEpochMilli millis))
 

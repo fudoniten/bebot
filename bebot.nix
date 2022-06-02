@@ -1,4 +1,5 @@
-{ lib, stdenv, bash, clojure, gitignoreSource, callPackage, ... }:
+{ lib, stdenv, clojure, gitignoreSource, callPackage, writeText
+, writeShellScript, ... }:
 
 let
   base-name = "bebot";
@@ -7,14 +8,25 @@ let
   jar-name = "${base-name}.jar";
 
   cljdeps = callPackage ./deps.nix { };
-  classpath = cljdeps.makeClasspaths { };
+
+  uberdeps-edn =
+    writeText "deps.edn" ''{:deps {uberdeps/uberdeps {:mvn/version "1.1.4"}}}'';
+  uberdeps-script = writeShellScript "bebot-uberdeps.sh" ''
+    SRC=$1
+    TARGET=$2
+    clojure -M -m uberdeps.uberjar --deps-file $SRC/deps.edn --target $TARGET
+  '';
 
 in stdenv.mkDerivation {
   name = full-name;
   src = gitignoreSource ./.;
-  buildInputs = [ bash clojure ] ++ map (d: d.paths) cljdeps.packages;
+  outputs = [ "lib" ];
+  buildInputs = [ clojure ] ++ map (d: d.paths) cljdeps.packages;
   buildPhase = ''
-    ./uberdeps/package.sh ./target/${jar-name}
+    mkdir $TEMP/build
+    cd $TEMP/build
+    cp ${uberdeps-edn} .
+    ${uberdeps-script} $src ./${jar-name}
   '';
   installPhase = ''
     cp ./target/${jar-name} $out

@@ -34,8 +34,8 @@ let repos = [
       inherit repos;
       artifactId = "clojure";
       groupId = "org.clojure";
-      sha512 = "4bb567b9262d998f554f44e677a8628b96e919bc8bcfb28ab2e80d9810f8adf8f13a8898142425d92f3515e58c57b16782cff12ba1b5ffb38b7d0ccd13d99bbc";
-      version = "1.10.3";
+      sha512 = "1925300a0fe4cc9fc3985910bb04ae65a19ce274dacc5ec76e708cfa87a7952a0a77282b083d0aebb2206afff619af73a57f0d661a3423601586f0829cc7956b";
+      version = "1.11.1";
       
     };
     paths = [ src ];
@@ -99,8 +99,8 @@ let repos = [
       inherit repos;
       artifactId = "core.specs.alpha";
       groupId = "org.clojure";
-      sha512 = "c1d2a740963896d97cd6b9a8c3dcdcc84459ea66b44170c05b8923e5fbb731b4b292b217ed3447bbc9e744c9a496552f77a6c38aea232e5e69f8faa627dea4b5";
-      version = "0.2.56";
+      sha512 = "f521f95b362a47bb35f7c85528c34537f905fb3dd24f2284201e445635a0df701b35d8419d53c6507cc78d3717c1f83cda35ea4c82abd8943cd2ab3de3fcad70";
+      version = "0.2.62";
       
     };
     paths = [ src ];
@@ -138,8 +138,8 @@ let repos = [
       inherit repos;
       artifactId = "spec.alpha";
       groupId = "org.clojure";
-      sha512 = "0740dc3a755530f52e32d27139a9ebfd7cbdb8d4351c820de8d510fe2d52a98acd6e4dfc004566ede3d426e52ec98accdca1156965218f269e60dd1cd4242a73";
-      version = "0.2.194";
+      sha512 = "ddfe4fa84622abd8ac56e2aa565a56e6bdc0bf330f377ff3e269ddc241bb9dbcac332c13502dfd4c09c2c08fe24d8d2e8cf3d04a1bc819ca5657b4e41feaa7c2";
+      version = "0.3.218";
       
     };
     paths = [ src ];
@@ -387,19 +387,6 @@ let repos = [
       groupId = "org.glassfish.jersey.core";
       sha512 = "f928076b42ee7da8b81d5c85b58074ad668c1c6554208fd6e3d47b13e99133dc4dd97c5390572e298a67635b89e71c27c0314639bf3c96ba482efeb16533f38b";
       version = "3.0.3";
-      
-    };
-    paths = [ src ];
-  }
-
-  rec {
-    name = "test.check/org.clojure";
-    src = fetchMavenArtifact {
-      inherit repos;
-      artifactId = "test.check";
-      groupId = "org.clojure";
-      sha512 = "b8d7a330b0b5514cd6a00c4382052fab51c3c9d3bc53133f8506791fa670e7c5ecd65094977ea5ced91f59623b0abd1ab8feeec96d63c5c6e459b265a655c577";
-      version = "1.1.1";
       
     };
     paths = [ src ];

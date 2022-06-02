@@ -2,7 +2,7 @@
   description = "BeBot Mattermost chatbot Clojure library.";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-21.05";
+    nixpkgs.url = "nixpkgs/nixos-21.05";
     utils.url = "github:numtide/flake-utils";
     clj2nix.url = "github:hlolli/clj2nix";
     gitignore = {

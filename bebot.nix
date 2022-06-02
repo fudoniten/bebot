@@ -9,14 +9,16 @@ let
   cljdeps = callPackage ./deps.nix { inherit fetchgit fetchMavenArtifact lib; };
   classpath = cljdeps.makeClasspaths { };
 
+  pthru = o: builtins.trace o o;
+
 in stdenv.mkDerivation {
   name = "${full-name}.jar";
   src = gitignoreSource ./.;
   buildInputs = [ clojure ] ++ map (d: d.paths) cljdeps.packages;
-  buildPhase = ''
+  buildPhase = pthru ''
     HOME=./home
     mkdir -p $HOME
-    clojure -Scp ${classpath} -X:build build/uberjar :project org.fudo/bebot :version 0.1
+    clojure -Scp ./src:${classpath} -X:build build/uberjar :project org.fudo/bebot :version 0.1
   '';
   installPhase = ''
     cp ./target/bebot-${version}-standalone.jar $out

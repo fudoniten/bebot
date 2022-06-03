@@ -3,6 +3,7 @@
 
 let
   base-name = "bebot";
+  project = "org.fudo";
   version = "0.1";
   full-name = "${base-name}-${version}";
 
@@ -13,12 +14,12 @@ let
 
 in stdenv.mkDerivation {
   name = "${full-name}.jar";
-  src = gitignoreSource ./.;
-  buildInputs = [ clojure ] ++ map (d: d.paths) cljdeps.packages;
+  src = ./.;
+  buildInputs = [ clojure ] ++ (map (d: d.paths) cljdeps.packages);
   buildPhase = pthru ''
     HOME=./home
     mkdir -p $HOME
-    clojure -Scp ./src:${classpath} -X:build build/uberjar :project org.fudo/bebot :version 0.1
+    clojure -Scp ${classpath}:./src -X:build build/uberjar :project ${project}/${base-name} :version ${version}
   '';
   installPhase = ''
     cp ./target/bebot-${version}-standalone.jar $out

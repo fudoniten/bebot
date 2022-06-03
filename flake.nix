@@ -2,34 +2,35 @@
   description = "BeBot Mattermost chatbot Clojure library.";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-21.05";
+    nixpkgs.url = "nixpkgs/nixos-22.05";
     utils.url = "github:numtide/flake-utils";
-    clj2nix.url = "github:hlolli/clj2nix";
-    gitignore = {
-      url = "github:hercules-ci/gitignore.nix";
+    clj-nix = {
+      url = "github:jlesquembre/clj-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, utils, clj2nix, gitignore, ... }:
+  outputs = { self, nixpkgs, utils, clj-nix, ... }:
     utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
-        bebot-lib = pkgs.callPackage ./bebot.nix {
-          inherit (gitignore.lib) gitignoreSource;
-        };
+        pkgs = nixpkgs.legacyPackages."${system}";
+        cljpkgs = clj-nix.packages."${system}";
+        update-deps = pkgs.writeShellScriptBin "update-deps.sh" ''
+          ${clj-nix.packages."${system}".deps-lock}/bin/deps-lock
+        '';
       in {
-        packages = utils.lib.flattenTree { inherit bebot-lib; };
-        defaultPackage = self.packages."${system}".bebot-lib;
-        overlay = final: prev: { inherit bebot-lib; };
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            bash
-            clojure
-            jre
-
-            clj2nix.packages."${system}".clj2nix
-          ];
+        packages = {
+          bebot = cljpkgs.mkCljBin {
+            projectSrc = ./.;
+            name = "org.fudo/bebot";
+            main-ns = "bebot.core";
+            jdkRunner = pkgs.jdk17_headless;
+          };
         };
+
+        defaultPackage = self.packages."${system}".bebot;
+
+        devShell =
+          pkgs.mkShell { buildInputs = with pkgs; [ clojure update-deps ]; };
       });
 }

@@ -7,15 +7,9 @@
         net.bis5.mattermost4j/mattermost4j-core { :mvn/version "0.24.0" }
 
         org.fudo/fudo-clojure {
-                               ;; :local/root "/nix/store/afrgn7xsiglgfghnfqbba22yq3hc41a6-fudo-clojure-0.1-standalone.jar"
                                :git/url "https://git.fudo.org/fudo-public/fudo-clojure.git"
-                               :sha "2d9303f55f7eac9c2f8989e9a0dde3dc97811220"
+                               :sha "1312a2805616b265ed4c89ef6216f300a7a7a155"
                                }
-
-        io.github.clojure/tools.build {
-                                       :git/url "https://github.com/clojure/tools.build.git"
-                                       :sha "ba1a2bf421838802e7bdefc541b41f57582e53b6"
-                                       }
         }
  :aliases {
            :test {
@@ -24,7 +18,7 @@
                                io.github.cognitect-labs/test-runner
                                {
                                 :git/url "https://github.com/cognitect-labs/test-runner.git"
-                                :sha "e1e292d8332eb7167e402ecb22f36f1443ba85e6"
+                                :sha "dfb30dd6605cb6c0efc275e1df1736f6e90d4d73"
                                 }
                                }
                   :main-opts ["-m" "cognitect.test-runner"]

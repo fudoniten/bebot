@@ -6,7 +6,8 @@
             [clojure.core.async :as async :refer [go-loop chan timeout >! <!]])
   (:import (net.bis5.mattermost.client4 ApiResponse
                                         MattermostClient)
-           net.bis5.mattermost.model.ChannelView))
+           net.bis5.mattermost.model.ChannelView)
+  (:use bebot.api.client))
 
 (defn- to-result [resp]
   (if (.hasError resp)

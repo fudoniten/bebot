@@ -8,7 +8,7 @@
 
         org.fudo/fudo-clojure {
                                :git/url "https://git.fudo.org/fudo-public/fudo-clojure.git"
-                               :sha "9775e301714b785c27b23664b0d89e379bdca27e"
+                               :sha "c948aa7a8e0698fd11312832cf033d271e817e45"
                                }
         }
  :aliases {

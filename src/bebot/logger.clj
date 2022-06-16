@@ -40,8 +40,8 @@
                          (when (emit-error? lvl)
                            (emit (mention-error? lvl) msg)))
         logic-stage    (fn [lvl msg]
-                         (when (logic-error? lvl)
-                           (emit (logic-error? lvl) msg)))]
+                         (when (emit-logic? lvl)
+                           (emit (mention-logic? lvl) msg)))]
     (reify log/Logger
       (debug! [_ msg] (error-stage :debug msg))
       (warn!  [_ msg] (error-stage :warn  msg))

@@ -2,7 +2,7 @@
   description = "BeBot Mattermost chatbot Clojure library.";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixpkgs.url = "nixpkgs/nixos-21.11";
     utils.url = "github:numtide/flake-utils";
     clj-nix = {
       url = "github:jlesquembre/clj-nix";
@@ -28,9 +28,9 @@
           };
         };
 
-        defaultPackage = self.packages."${system}".bebot;
+        packages.default = self.packages."${system}".bebot;
 
-        devShell =
+        devShells.default =
           pkgs.mkShell { buildInputs = with pkgs; [ clojure update-deps ]; };
       });
 }

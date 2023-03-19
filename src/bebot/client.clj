@@ -35,11 +35,6 @@
             (= (id user) (user-id post)))]
     (filter (complement post-by-user?) posts)))
 
-#_(defn make-lazy-seq
-    ([f] (make-lazy-seq f 60))
-    ([f delay]
-     (lazy-seq (concat (f) (make-lazy-seq f delay)))))
-
 (defn- yield-to-channel
   [coll-gen &
    {:keys [poll-delay buffer-size]

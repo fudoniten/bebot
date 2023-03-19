@@ -4,10 +4,8 @@
             [bebot.api.channel :as chan]
             [fudo-clojure.result :refer [let-result exception-failure success failure map-success dispatch-result]]
             [clojure.core.async :as async :refer [go-loop chan timeout >! <!]])
-  (:import (net.bis5.mattermost.client4 ApiResponse
-                                        MattermostClient)
-           net.bis5.mattermost.model.ChannelView)
-  (:use bebot.api.client))
+  (:import net.bis5.mattermost.client4.MattermostClient
+           net.bis5.mattermost.model.ChannelView))
 
 (defn- to-result [resp]
   (if (.hasError resp)
@@ -27,24 +25,26 @@
 (defn- to-millis [instant]
   (.toEpochMilli instant))
 
-(defn- pthru [o] (clojure.pprint/pprint o) o)
-
 (defn- sort-by-create-date [objs]
-  (defn compare-dates [a b]
-    (.isBefore (created-at a) (created-at b)))
-  (sort compare-dates objs))
+  (letfn [(compare-dates [a b]
+            (.isBefore (created-at a) (created-at b)))]
+    (sort compare-dates objs)))
 
 (defn- remove-posts-by [user posts]
-  (defn post-by-user? [post] (= (id user) (user-id post)))
-  (filter (complement post-by-user?) posts))
+  (letfn [(post-by-user? [post]
+            (= (id user) (user-id post)))]
+    (filter (complement post-by-user?) posts)))
 
 #_(defn make-lazy-seq
     ([f] (make-lazy-seq f 60))
     ([f delay]
      (lazy-seq (concat (f) (make-lazy-seq f delay)))))
 
-(defn- yield-to-channel [coll-gen & { :keys [poll-delay buffer-size] :or {poll-delay 30 buffer-size 10}}]
-  (let [out-chan (chan 10)]
+(defn- yield-to-channel
+  [coll-gen &
+   {:keys [poll-delay buffer-size]
+    :or   {poll-delay 30 buffer-size 10}}]
+  (let [out-chan (chan buffer-size)]
     (go-loop [result (coll-gen)]
       (dispatch-result result
                        ([os] (doseq [o (sort-by-create-date os)]

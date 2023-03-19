@@ -2,13 +2,13 @@
  :paths ["src"]
  :deps {
         org.clojure/clojure    { :mvn/version "1.11.1" }
-        org.clojure/core.async { :mvn/version "1.5.648" }
+        org.clojure/core.async { :mvn/version "1.6.673" }
 
-        net.bis5.mattermost4j/mattermost4j-core { :mvn/version "0.24.0" }
+        net.bis5.mattermost4j/mattermost4j-core { :mvn/version "0.25.0" }
 
         org.fudo/fudo-clojure {
                                :git/url "https://git.fudo.org/fudo-public/fudo-clojure.git"
-                               :sha "c6a1ebef2e5b64d432a46ac48639c674e62b7cee"
+                               :sha "5fd28094e18281ff409050fb1b0dda94b76671ed"
                                }
         }
  :aliases {
